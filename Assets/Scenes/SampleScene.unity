@@ -208,12 +208,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.1
+  m_fontSize: 72.5
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 800
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -583,12 +583,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.5
+  m_fontSize: 96.75
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 800
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -919,8 +919,8 @@ RectTransform:
   m_Father: {fileID: 709155502}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4, y: 0.4}
-  m_AnchorMax: {x: 0.6, y: 0.6}
+  m_AnchorMin: {x: 0.35, y: 0.35}
+  m_AnchorMax: {x: 0.65, y: 0.65}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -971,12 +971,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 67.5
+  m_fontSize: 261
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 500
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1031,9 +1031,9 @@ GameObject:
   m_Component:
   - component: {fileID: 709155502}
   - component: {fileID: 709155504}
+  - component: {fileID: 709155505}
   - component: {fileID: 709155503}
   - component: {fileID: 709155506}
-  - component: {fileID: 709155505}
   - component: {fileID: 709155507}
   - component: {fileID: 709155508}
   m_Layer: 5
@@ -1115,18 +1115,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b9e38d62c1d36408f2c77aac1da686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerTimeSeconds: 90
-  myEvent:
+  onTimeUp:
     m_PersistentCalls:
       m_Calls: []
+  timerTimeSeconds: 90
   maxIndicator: 1
   currentTime: 0
+  inputField: {fileID: 1238547943}
   radialIndicator: {fileID: 1368861460}
+  digitalCounter: {fileID: 666910268}
   audioSource: {fileID: 709155507}
   gongSound: {fileID: 8300000, guid: 348fdde6c35c9514294f50fae50a469a, type: 3}
   tickingSound: {fileID: 8300000, guid: 40cda8dc093c81949a611387b8afc409, type: 3}
-  inputField: {fileID: 1238547943}
-  digitalCounter: {fileID: 666910268}
 --- !u!114 &709155506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,12 +1378,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.1
+  m_fontSize: 72.5
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 800
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1513,12 +1513,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.6
+  m_fontSize: 133.35
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 16
-  m_fontSizeMax: 72
+  m_fontSizeMax: 800
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1777,7 +1777,7 @@ GameObject:
   - component: {fileID: 1238547944}
   - component: {fileID: 1238547943}
   m_Layer: 5
-  m_Name: Time
+  m_Name: Time Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1865,7 +1865,19 @@ MonoBehaviour:
   m_CharacterLimit: 3
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 709155505}
+        m_TargetAssemblyTypeName: Script.ClockUI, Assembly-CSharp
+        m_MethodName: UpdateTime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1883,19 +1895,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 709155505}
-        m_TargetAssemblyTypeName: ClockUI, Assembly-CSharp
-        m_MethodName: UpdateTime
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2376,12 +2376,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.25
+  m_fontSize: 145
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 800
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
