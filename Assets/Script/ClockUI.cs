@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Script
 {
     /// <summary>
-    /// Clock Manager and main runner for the app.
+    ///     Clock Manager and main runner for the app.
     /// </summary>
     public class ClockUI : MonoBehaviour
     {
@@ -62,7 +62,7 @@ namespace Script
         #region Private Fields
 
         /// <summary>
-        /// Clock states.
+        ///     Clock states.
         /// </summary>
         private enum State
         {
@@ -73,12 +73,12 @@ namespace Script
         }
 
         /// <summary>
-        /// Current state of the timer
+        ///     Current state of the timer
         /// </summary>
         private State _state = State.Ready;
 
         /// <summary>
-        /// Next timer time.
+        ///     Next timer time.
         /// </summary>
         private float _queuedTimerTime;
 
@@ -93,7 +93,7 @@ namespace Script
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
                 Application.Quit();
@@ -111,7 +111,7 @@ namespace Script
 
             if (currentTime < 1)
                 return;
-            
+
             audioSource.clip = gongSound;
             audioSource.pitch = 1;
             audioSource.loop = false;
@@ -127,7 +127,7 @@ namespace Script
         #region Public Methods
 
         /// <summary>
-        /// Change Timer state based on previous state.
+        ///     Change Timer state based on previous state.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void OnClick()
@@ -152,7 +152,7 @@ namespace Script
         }
 
         /// <summary>
-        /// Set timer state to Ready.
+        ///     Set timer state to Ready.
         /// </summary>
         public void ResetTimer()
         {
@@ -168,7 +168,7 @@ namespace Script
         }
 
         /// <summary>
-        /// Get new Timer time from Input field
+        ///     Get new Timer time from Input field
         /// </summary>
         public void UpdateTime()
         {
@@ -176,13 +176,14 @@ namespace Script
             _queuedTimerTime = Mathf.Clamp(result, 0, 999);
             inputField.text = _queuedTimerTime.ToString("N0");
 
-            if (_state == State.Running) return;
+            if (_state == State.Running)
+                return;
 
             timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
         }
 
         /// <summary>
-        /// Update the input field with a new time
+        ///     Update the input field with a new time
         /// </summary>
         /// <param name="timeDelta"></param>
         public void UpdateInputField(float timeDelta)
