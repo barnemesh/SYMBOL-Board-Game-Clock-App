@@ -11,6 +11,41 @@ namespace Script
     /// </summary>
     public class ClockUI : MonoBehaviour
     {
+        #region Private Methods
+
+        /// <summary>
+        ///     Set the internal time and the input field text to newTime
+        /// </summary>
+        /// <param name="newTime"> Time to set</param>
+        private void UpdateTimeTo(float newTime)
+        {
+            _queuedTimerTime = newTime;
+            inputField.text = _queuedTimerTime.ToString("N0");
+
+            if (_state == State.Running)
+                return;
+
+            timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
+        }
+
+        #endregion
+
+        #region Static Methods
+
+        /// <summary>
+        ///     Interpolate smoothly from a to b at point t.
+        /// </summary>
+        /// <param name="a"> from</param>
+        /// <param name="b"> to</param>
+        /// <param name="t"> distance</param>
+        /// <returns> The interpolated value.</returns>
+        private static float Interpolator(float a, float b, float t)
+        {
+            return a + b * (3 * Mathf.Pow(t, 4) - 3 * Mathf.Pow(t, 8) + Mathf.Pow(t, 12));
+        }
+
+        #endregion
+
         #region Inspector
 
         [SerializeField]
@@ -107,7 +142,7 @@ namespace Script
             currentTime += Time.deltaTime / timerTimeSeconds;
             digitalCounter.text = ((1 - currentTime) * timerTimeSeconds).ToString("N0");
             radialIndicator.fillAmount = currentTime;
-            audioSource.pitch = 1 + 2 * currentTime;
+            audioSource.pitch = Interpolator(1, 3, currentTime);
 
             if (currentTime < 1)
                 return;
@@ -189,21 +224,6 @@ namespace Script
             result = Mathf.Clamp(result + timeDelta, 0, 999);
 
             UpdateTimeTo(result);
-        }
-
-        /// <summary>
-        ///     Set the internal time and the input field text to newTime
-        /// </summary>
-        /// <param name="newTime"> Time to set</param>
-        private void UpdateTimeTo(float newTime)
-        {
-            _queuedTimerTime = newTime;
-            inputField.text = _queuedTimerTime.ToString("N0");
-
-            if (_state == State.Running)
-                return;
-
-            timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
         }
 
         #endregion
