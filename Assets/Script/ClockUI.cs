@@ -170,28 +170,40 @@ namespace Script
         /// <summary>
         ///     Get new Timer time from Input field
         /// </summary>
-        public void UpdateTime()
+        /// <param name="input"> New string to parse time from</param>
+        public void ParseNewTime(string input)
+        {
+            float.TryParse(input, out var result);
+            result = Mathf.Clamp(result, 0, 999);
+
+            UpdateTimeTo(result);
+        }
+
+        /// <summary>
+        ///     Update the time to current time + timeDelta
+        /// </summary>
+        /// <param name="timeDelta"> Time to add</param>
+        public void AddTimeToInputField(float timeDelta)
         {
             float.TryParse(inputField.text, out var result);
-            _queuedTimerTime = Mathf.Clamp(result, 0, 999);
+            result = Mathf.Clamp(result + timeDelta, 0, 999);
+
+            UpdateTimeTo(result);
+        }
+
+        /// <summary>
+        ///     Set the internal time and the input field text to newTime
+        /// </summary>
+        /// <param name="newTime"> Time to set</param>
+        private void UpdateTimeTo(float newTime)
+        {
+            _queuedTimerTime = newTime;
             inputField.text = _queuedTimerTime.ToString("N0");
 
             if (_state == State.Running)
                 return;
 
             timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
-        }
-
-        /// <summary>
-        ///     Update the input field with a new time
-        /// </summary>
-        /// <param name="timeDelta"></param>
-        public void UpdateInputField(float timeDelta)
-        {
-            float.TryParse(inputField.text, out var result);
-            result = Mathf.Clamp(result + timeDelta, 0, 999);
-            inputField.text = result.ToString("N0");
-            UpdateTime();
         }
 
         #endregion
