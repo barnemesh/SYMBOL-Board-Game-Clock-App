@@ -26,7 +26,7 @@ namespace Script
                 return;
 
             timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
-            _percentageOfIncreasePitchTime = Mathf.InverseLerp(0,1,timerTimeSeconds - increasePitchTime);
+            _percentageOfIncreasePitchTime = Mathf.InverseLerp(0,timerTimeSeconds,timerTimeSeconds - increasePitchTime);
         }
         
         /// <summary>
@@ -147,7 +147,7 @@ namespace Script
         {
             AddTimeToInputField(0);
             _queuedTimerTime = timerTimeSeconds;
-            _percentageOfIncreasePitchTime = Mathf.InverseLerp(0,1,timerTimeSeconds - increasePitchTime);
+            _percentageOfIncreasePitchTime = Mathf.InverseLerp(0,timerTimeSeconds,timerTimeSeconds - increasePitchTime);
             ResetTimer();
         }
 
@@ -217,7 +217,7 @@ namespace Script
         {
             _state = State.Ready;
             timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
-            _percentageOfIncreasePitchTime =  Mathf.InverseLerp(0,1,timerTimeSeconds - increasePitchTime);
+            _percentageOfIncreasePitchTime =  Mathf.InverseLerp(0,timerTimeSeconds,timerTimeSeconds - increasePitchTime);
             digitalCounter.text = timerTimeSeconds.ToString("N0");
             radialIndicator.fillAmount = 0;
             currentTime = 0;
