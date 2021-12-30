@@ -26,6 +26,17 @@ namespace Script
                 return;
 
             timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
+            _percentageOfIncreasePitchTime = Mathf.InverseLerp(0,1,timerTimeSeconds - increasePitchTime);
+        }
+        
+        /// <summary>
+        ///     Pitch the ticking sound when increasePitchTime is left in the timer.
+        /// </summary>
+        private void PitchTickingSound()
+        {
+            audioSource.pitch = currentTime > _percentageOfIncreasePitchTime
+                ? Interpolator(1, 3, Mathf.InverseLerp(_percentageOfIncreasePitchTime, 1, currentTime))
+                : 1;
         }
 
         #endregion
@@ -41,7 +52,9 @@ namespace Script
         /// <returns> The interpolated value.</returns>
         private static float Interpolator(float a, float b, float t)
         {
-            return a + b * (3 * Mathf.Pow(t, 4) - 3 * Mathf.Pow(t, 8) + Mathf.Pow(t, 12));
+            // return Mathf.SmoothStep(a, b, t);
+            // return a + (b - a) * (3 * Mathf.Pow(t, 4) - 3 * Mathf.Pow(t, 8) + Mathf.Pow(t, 12));
+            return a + (b - a) * (6 * Mathf.Pow(t, 5) - 15 * Mathf.Pow(t, 4) + 10 * Mathf.Pow(t, 3));
         }
 
         #endregion
@@ -49,13 +62,17 @@ namespace Script
         #region Inspector
 
         [SerializeField]
-        [Tooltip("Called when timer reach 0")]
+        [Tooltip("Called when timer reach 0.")]
         private UnityEvent onTimeUp;
 
         [Header("Timer Variables")]
         [SerializeField]
-        [Tooltip("Timer time in seconds")]
+        [Tooltip("Timer time in seconds.")]
         private float timerTimeSeconds = 90;
+
+        [SerializeField]
+        [Tooltip("How much time should be left before starting to pitch the time.")]
+        private float increasePitchTime = 20f;
 
         [SerializeField]
         [Tooltip("Percentage of radial indicator to fill.")]
@@ -117,13 +134,20 @@ namespace Script
         /// </summary>
         private float _queuedTimerTime;
 
+        /// <summary>
+        ///     Percentage of time to reach when staring to pitch sound.
+        /// </summary>
+        private float _percentageOfIncreasePitchTime;
+
         #endregion
 
         #region MonoBehaviour
 
         private void Start()
         {
+            AddTimeToInputField(0);
             _queuedTimerTime = timerTimeSeconds;
+            _percentageOfIncreasePitchTime = Mathf.InverseLerp(0,1,timerTimeSeconds - increasePitchTime);
             ResetTimer();
         }
 
@@ -142,7 +166,7 @@ namespace Script
             currentTime += Time.deltaTime / timerTimeSeconds;
             digitalCounter.text = ((1 - currentTime) * timerTimeSeconds).ToString("N0");
             radialIndicator.fillAmount = currentTime;
-            audioSource.pitch = Interpolator(1, 3, currentTime);
+            PitchTickingSound();
 
             if (currentTime < 1)
                 return;
@@ -192,8 +216,9 @@ namespace Script
         public void ResetTimer()
         {
             _state = State.Ready;
-            digitalCounter.text = timerTimeSeconds.ToString("N0");
             timerTimeSeconds = _queuedTimerTime == 0 ? 1 : _queuedTimerTime;
+            _percentageOfIncreasePitchTime =  Mathf.InverseLerp(0,1,timerTimeSeconds - increasePitchTime);
+            digitalCounter.text = timerTimeSeconds.ToString("N0");
             radialIndicator.fillAmount = 0;
             currentTime = 0;
             audioSource.clip = tickingSound;
