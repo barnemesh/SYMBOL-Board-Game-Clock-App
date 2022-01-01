@@ -37,6 +37,7 @@ namespace Script
             audioSource.pitch = currentTime > _percentageOfIncreasePitchTime
                 ? Interpolator(1, 3, Mathf.InverseLerp(_percentageOfIncreasePitchTime, 1, currentTime))
                 : 1;
+            // _backgroundMaterial.SetFloat(TimeScaleProperty, audioSource.pitch);
         }
 
         #endregion
@@ -64,6 +65,11 @@ namespace Script
         [SerializeField]
         [Tooltip("Called when timer reach 0.")]
         private UnityEvent onTimeUp;
+        
+        [SerializeField]
+        [Header("Background")]
+        [Tooltip("Background image.")]
+        private Image backgroundImage;
 
         [Header("Timer Variables")]
         [SerializeField]
@@ -139,13 +145,23 @@ namespace Script
         /// </summary>
         private float _percentageOfIncreasePitchTime;
 
+        /// <summary>
+        /// Material used by the background image.
+        /// </summary>
+        private Material _backgroundMaterial;
+
+        /// <summary>
+        /// Property id to change time scale in shader
+        /// </summary>
+        private static readonly int TimeScaleProperty = Shader.PropertyToID("_TimeScale");
+
         #endregion
 
         #region MonoBehaviour
 
         private void Start()
         {
-            AddTimeToInputField(0);
+            _backgroundMaterial = backgroundImage.material;
             _queuedTimerTime = timerTimeSeconds;
             _percentageOfIncreasePitchTime = Mathf.InverseLerp(0,timerTimeSeconds,timerTimeSeconds - increasePitchTime);
             ResetTimer();
@@ -173,6 +189,7 @@ namespace Script
 
             audioSource.clip = gongSound;
             audioSource.pitch = 1;
+            // _backgroundMaterial.SetFloat(TimeScaleProperty, 1);
             audioSource.loop = false;
             audioSource.Play();
 
@@ -224,6 +241,7 @@ namespace Script
             audioSource.clip = tickingSound;
             audioSource.loop = true;
             audioSource.pitch = 1;
+            // _backgroundMaterial.SetFloat(TimeScaleProperty, 1);
             audioSource.Stop();
         }
 
