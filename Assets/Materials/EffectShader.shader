@@ -1,5 +1,16 @@
 Shader "EffectShader"
 {
+	/*
+     * Some details on what we tried to achieve with the bonus shader:
+     * Making an "Invisible Ink" effect - Texture that can only be seen when there is no light.
+     * To make it even more nice looking, the hidden texture also flickers using Perlin noise.
+     * Hopefully, this gives the intended effect - magical text that has moving energy inside of it.
+     * Loosely inspired by The Doors of Durin - the entrance to Moria from the LOTR books.
+     * 
+     * To do this we took "basic" shader - based on our brick shader, and added this extra functionality to it.
+     * Making this basically an "Additive", something you can probably add to most shaders.
+     * The bonus scene uses RoundedCube and Capsule to show the effect.
+     */
     Properties
     {
         _NormalColor ("Color", Color) = (0, 0, 0, 1)
