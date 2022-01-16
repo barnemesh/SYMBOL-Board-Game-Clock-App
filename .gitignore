@@ -79,3 +79,4 @@ GoogleAarExplodeCache.xml
 web/Development
 web/TemplateData
 web/Release
+*.log
