@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: f71766899629ea54dadfcf6c3716ed6a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Almoni Neue DL 4.0 AAA
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 725be5ab7217bf8409a01c7b70429062, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
